@@ -35,34 +35,9 @@ To run the project, execute the following command:
 
 inception/
 ├── includes/
-│   ├── cub3d.h
-│   ├── libft.h
-│   ├── ft_printf.h
-│   ├── get_next_line.h
-│   ├── macros.h
 ├── lib/
-│   ├── libft/
-│   ├── mlx/
-│   │   ├── mlxMac/
-│   │   ├── mlxLinux/
 ├── maps/
 ├── src/
-│   ├── init/
-│   │   ├── init.c
-│   │   ├── init_utils.c
-│   │   ├── loop.c
-│   │   ├── utils.c
-│   ├── parsing/
-│   │   ├── check_access.c
-│   │   ├── getcolor.c
-│   │   ├── getdimensions.c
-│   │   ├── getmap.c
-│   │   ├── getpath.c
-│   │   ├── parse.c
-│   │   ├── utils.c
-│   │   ├── utils2.c
-│   ├── main.c
-│   ├── obj/
 ├── textures/
 ├── Makefile
 ├── subject.pdf
