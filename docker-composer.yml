@@ -1,0 +1,154 @@
+services:
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    image: nginx
+    depends_on:
+      - adminer
+      - redis
+    ports:
+      - 443:443
+    volumes:
+      - wordpress:/var/www/html
+    environment:
+      DOMAIN_NAME: ${DOMAIN_NAME}
+      CERTS_CRT: ${CERTS_CRT}
+      CERTS_KEY: ${CERTS_KEY}
+      MYSQL_USER: ${MYSQL_USER}
+    restart: always
+    networks:
+      - network
+
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    image: mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
+    networks:
+      - network
+    restart: always
+    environment:
+      MYSQL_HOSTNAME: ${MYSQL_HOSTNAME}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    depends_on:
+      - mariadb
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      WP_TITLE: ${WP_TITLE}
+      WP_USER: ${WP_USER}
+      WP_PASSWORD: ${WP_PASSWORD}
+      WP_PATH: ${WP_PATH}
+      WP_EMAIL: ${WP_EMAIL}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      DOMAIN_NAME: ${DOMAIN_NAME}
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - network
+#####################################################################
+#----BONUS PART-----#################################################
+#####################################################################
+  ftp:
+    container_name: ftp
+    build: ./requirements/bonus/ftp/.
+    image: ftp
+    depends_on:
+      - wordpress
+    volumes:
+      - wordpress:/var/www/html
+    environment:
+      FTP_USR: ${FTP_USR}
+      FTP_PWD: ${FTP_PWD}
+    ports:
+      - "21:21"
+      - "20:20"
+      - "40000-40005:40000-40005"
+    networks:
+      - network
+    restart: always
+
+  redis:
+    container_name: redis
+    build: ./requirements/bonus/redis/.
+    image: redis
+    depends_on:
+      - wordpress
+    ports:
+     - '6379:6379'
+    restart: always
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - network
+  adminer:
+    container_name: adminer
+    build: ./requirements/bonus/adminer/.
+    image: adminer
+    depends_on:
+      - mariadb
+    ports:
+      - "600:80"
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - network
+    restart: always
+
+  cadvisor:
+    container_name: cadvisor
+    build: ./requirements/bonus/cadvisor/.
+    image: cadvisor
+    ports:
+      - "8080:8080"
+    networks:
+      - network
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    restart: always
+
+  website:
+    container_name: website
+    build: ./requirements/bonus/websites/.
+    image: website:42
+    ports:
+      - "3000:3000"
+    networks:
+      - network
+    restart: always
+
+volumes:
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: none
+      device: /$HOME/data/mysql
+      o: bind
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: none
+      device: /$HOME/data/wordpress
+      o: bind
+
+networks:
+  network:
+    driver: bridge
+    name: inception
