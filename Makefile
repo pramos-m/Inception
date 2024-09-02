@@ -1,15 +1,15 @@
 all: host vol
 	sudo chmod 777 /var/run/docker.sock
-	@docker compose -f ./srcs/docker-compose.yml up -d --build
+	@docker-compose -f ./srcs/docker-compose.yml up -d --build
 
 host:
 	sudo sed -i 's|localhost|jocorrea.42.fr|g' /etc/hosts
 
 down:
-	@docker compose -f ./srcs/docker-compose.yml down
+	@docker-compose -f ./srcs/docker-compose.yml down
 
 re:
-	@docker compose -f srcs/docker-compose.yml up -d --build
+	@docker-compose -f srcs/docker-compose.yml up -d --build
 
 vol:
 	mkdir -p $(HOME)/data/mysql
