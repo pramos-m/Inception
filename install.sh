@@ -47,10 +47,6 @@ fi
 echo "Adding the current user to the docker group..."
 sudo usermod -aG docker $USER
 
-# Install Telegram
-echo "Installing Telegram..."
-sudo snap install telegram-desktop
-
 # Install VSCode
 echo "Installing Visual Studio Code..."
 if ! command_exists code; then
