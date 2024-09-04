@@ -3,7 +3,7 @@ all: host vol
 	@docker-compose -f ./srcs/docker-compose.yml up -d --build
 
 host:
-	sudo sed -i 's|localhost|jocorrea.42.fr|g' /etc/hosts
+	sudo sed -i 's|localhost|pramos-m.42.fr|g' /etc/hosts
 
 down:
 	@docker-compose -f ./srcs/docker-compose.yml down
