@@ -23,5 +23,4 @@ userlist_file=/etc/vsftpd.userlist" >> /etc/vsftpd.conf
 
 service vsftpd stop
 
-
-/usr/sbin/vsftpd
+exec "$@"

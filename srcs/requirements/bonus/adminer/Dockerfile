@@ -6,4 +6,6 @@ COPY ./tools/adminer.sh /
 
 RUN chmod +x adminer.sh
 
-CMD ["/adminer.sh"]
+ENTRYPOINT ["/adminer.sh"]
+
+CMD [ "php -S "0.0.0.0:80"" ]
