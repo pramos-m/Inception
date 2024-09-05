@@ -8,6 +8,4 @@ RUN chmod +x nginx.sh
 
 EXPOSE	443
 
-ENTRYPOINT ["./nginx.sh"]
-
-CMD [ "nginx -g "daemon off;"" ]
+CMD ["./nginx.sh"]

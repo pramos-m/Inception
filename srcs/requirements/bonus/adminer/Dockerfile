@@ -8,4 +8,4 @@ RUN chmod +x adminer.sh
 
 ENTRYPOINT ["/adminer.sh"]
 
-CMD [ "php -S "0.0.0.0:80"" ]
+CMD [ "php", "-S", "0.0.0.0:80" ]

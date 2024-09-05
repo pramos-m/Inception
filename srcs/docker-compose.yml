@@ -125,7 +125,7 @@ services:
   website:
     container_name: website
     build: ./requirements/bonus/websites/.
-    image: website:42
+    image: website
     ports:
       - "3000:3000"
     networks:
