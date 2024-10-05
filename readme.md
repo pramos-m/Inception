@@ -43,9 +43,7 @@ inception/
 ├── subject.pdf
 
 ## Subject
-
-    For detailed project instructions, please refer to the subject.pdf file included in this repository.
-
+    
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
